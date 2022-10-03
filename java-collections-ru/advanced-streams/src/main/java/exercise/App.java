@@ -6,38 +6,19 @@ import java.util.Arrays;
 // BEGIN
 class App {
 
-    public static String getForwardedVariables(String conf) {
-        String[] trying = conf.split("\n");
-        String wordToFilter = "X_FORWARDED_";
-        return Arrays.stream(trying)
-                .filter(x -> x.startsWith("environment="))
-                .filter(x -> x.contains(wordToFilter))
-                .map(x -> x.substring(x.indexOf(wordToFilter) + wordToFilter.length()))
-                .map(x -> {
-                    if (!x.contains(wordToFilter)) {
-                        if (x.contains(",")) {
-                            return x.substring(0, x.indexOf(','));
-                        }
-                        return x.replaceAll(",", "");
-                    } else {
-                        return getResult(x, wordToFilter);
-                    }
-                })
-                .map(x -> x.replaceAll("[\\[\\]\"]", "")
-                        .trim())
+    public static String getForwardedVariables(String config) {
+        String[] lines = config.split("\n");
+        return Arrays.stream(lines)
+                .filter(line -> line.startsWith("environment="))
+                .map(line -> line.replaceAll("environment=", ""))
+                .map(line -> line.replaceAll("\"", ""))
+                .map(line -> line.split(","))
+                .flatMap(Arrays::stream)
+                .filter(line -> line.startsWith("X_FORWARDED_"))
+                .map(line -> line.replaceAll("X_FORWARDED_", ""))
+                .map(line -> line.toString())
                 .collect(Collectors.joining(","));
-    }
 
-    public static String getResult(String sentence, String word) {
-        String stringBuilder = sentence.substring(0, sentence.indexOf(","));
-        String stringToAdd;
-        while (sentence.contains(word)) {
-            stringToAdd = sentence.substring(sentence.indexOf(word) + word.length());
-            stringToAdd = stringToAdd.substring(0, stringToAdd.indexOf(","));
-            stringBuilder = stringBuilder + "|" + stringToAdd;
-            sentence = sentence.replace(word, "");
-        }
-        return stringBuilder.replace("|", ",");
     }
 }
 //END
