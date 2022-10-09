@@ -2,16 +2,11 @@ package exercise;
 
 import java.util.*;
 
-//        "added" — ключ отсутствовал в первом массиве, но был добавлен во второй
-//        "deleted" — ключ был в первом массиве, но отсутствует во втором
-//        "changed" — ключ присутствовал и в первом и во втором массиве, но значения отличаются
-//        "unchanged" — ключ присутствовал и в первом и во втором массиве с одинаковыми значениями
-
 // BEGIN
 public class App {
     public static LinkedHashMap<String, String> genDiff(Map<String, Object> map1, Map<String, Object> map2) {
-        LinkedHashMap<String, String> result = new LinkedHashMap<>(); // в result должны добавить значения сверху
-        Set<String> treeSet = new TreeSet<>(); // должны отсортировать по алфавиту и убрать дубликаты(возможно)?
+        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+        Set<String> treeSet = new TreeSet<>();
         for (Map.Entry<String, Object> item : map1.entrySet()) {
             treeSet.add(item.getKey());
         }
