@@ -50,7 +50,7 @@ public class Validator {
                 e.printStackTrace();
             }
 
-            if (isNullWithNotNull(field,fieldArgument)) {
+            if (isNullWithNotNull(field, fieldArgument)) {
                 notValidFields.put(fieldName, List.of("can not be null"));
 
             } else if (isBelowMinLengthAnnotation(field, fieldArgument)) {
