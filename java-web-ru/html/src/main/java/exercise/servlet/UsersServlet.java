@@ -57,10 +57,15 @@ public class UsersServlet extends HttpServlet {
         Map<Integer, Map<String, String>> users = getUsersAsMap(getUsers());
 
         sb.append("""
-                <!doctype html>
-                <html>
+                <!DOCTYPE html>
+                <html lang=\"ru\">
                     <head>
-                        <title>Users</title>
+                        <meta charset=\"UTF-8\">
+                        <title>Example application | Users</title>
+                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css\"
+                            rel=\"stylesheet\"
+                            integrity=\"sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We\"
+                            crossorigin=\"anonymous\">
                     </head>
                     <body>
                         <h1>Users</h1>
@@ -105,12 +110,15 @@ public class UsersServlet extends HttpServlet {
         } else {
             Map<String, String> user = users.get(Integer.parseInt(id));
             sb.append("""
-                <!doctype html>
-                <html>
+                <!DOCTYPE html>
+                <html lang=\"ru\">
                     <head>
-                        <title>""");
-            sb.append(user.get("firstName") + " " + user.get("lastName") + "</title>");
-            sb.append("""
+                        <meta charset=\"UTF-8\">
+                        <title>Example application | Users</title>
+                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css\"
+                            rel=\"stylesheet\"
+                            integrity=\"sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We\"
+                            crossorigin=\"anonymous\">
                     </head>
                     <body>
                 """);
