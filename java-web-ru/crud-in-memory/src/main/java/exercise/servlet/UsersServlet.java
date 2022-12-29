@@ -188,8 +188,6 @@ public class UsersServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.jsp");
         requestDispatcher.forward(request, response);
         // END
-
-        // END
     }
 
     private void updateUser(HttpServletRequest request,
