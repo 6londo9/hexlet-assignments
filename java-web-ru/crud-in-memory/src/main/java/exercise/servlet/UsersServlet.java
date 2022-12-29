@@ -156,6 +156,7 @@ public class UsersServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/new.jsp");
 
             request.setAttribute("user", user);
+            request.setAttribute("error", "Имя и Фамилия не могут быть пустыми!");
             response.setStatus(422);
             requestDispatcher.forward(request, response);
             return;
@@ -208,6 +209,7 @@ public class UsersServlet extends HttpServlet {
 
         if (newFirstName.isEmpty() || newLastName.isEmpty()) {
             request.setAttribute("user", user);
+            request.setAttribute("error", "Имя и Фамилия не могут быть пустыми!");
             response.setStatus(422);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.jsp");
