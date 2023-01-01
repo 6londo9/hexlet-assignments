@@ -58,7 +58,23 @@ public class SessionServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String email = request.getParameter("email");
+        String password = request.getParameter("password");
         Map<String, String> user = users.findByEmail(email);
+
+        if (user == null || !password.equals("password")) {
+            request.setAttribute("user", user);
+            session.setAttribute("flash", "Неверный логин или пароль");
+            response.setStatus(422);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
+            requestDispatcher.forward(request, response);
+        } else {
+            String id = user.get("id");
+
+            session.setAttribute("userId", id);
+            session.setAttribute("flash", "Вы успешно вошли");
+
+            response.sendRedirect("/");
+        }
         // END
     }
 
@@ -67,7 +83,10 @@ public class SessionServlet extends HttpServlet {
                  throws IOException {
 
         // BEGIN
-        
+        HttpSession session = request.getSession();
+        session.removeAttribute("userId");
+        session.setAttribute("flash", "Вы успешно вышли");
+        response.sendRedirect("/");
         // END
     }
 }
