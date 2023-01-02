@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layouts/application.html}">
+
+<head>
+  <title>Sign Up</title>
+</head>
+<section layout:fragment="content">
+  <!-- BEGIN -->
+  <h1>Регистрация</h1>
+  <form action="/users/new" method="post">
+    <div class="mb-3">
+      <label>Имя</label>
+      <input class="form-control" type="text" name="firstName" value='${user.getOrDefault("firstName", "")}'>
+    </div>
+    <div class="mb-3">
+      <label>Фамилия</label>
+      <input class="form-control" type="text" name="lastName" value='${user.getOrDefault("lastName", "")}'>
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input class="form-control" type="text" name="email" value='${user.getOrDefault("email", "")}'>
+    </div>
+    <button class="btn btn-primary" type="submit">Create account</button>
+  </form>
+  <!-- END -->
+</section>
