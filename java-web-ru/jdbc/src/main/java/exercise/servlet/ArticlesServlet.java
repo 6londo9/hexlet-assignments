@@ -100,21 +100,25 @@ public class ArticlesServlet extends HttpServlet {
         // BEGIN
         String id = getId(request);
         Map<String, String> article = new HashMap<>();
-        String query = "SELECT id, title, body FROM articles WHERE id = ?;";
+        String query = "SELECT * FROM articles WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             int intId = Integer.parseInt(id);
-            statement.setInt(1, intId);
+            statement.setString(1, id);
 
             ResultSet rs = statement.executeQuery();
+
+            if (!rs.first()) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
 
             article.put("id", rs.getString("id"));
             article.put("title", rs.getString("title"));
             article.put("body", rs.getString("body"));
 
         } catch (SQLException e) {
-            System.out.println("An exception has occured: " + e.getMessage());
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
         request.setAttribute("article", article);
