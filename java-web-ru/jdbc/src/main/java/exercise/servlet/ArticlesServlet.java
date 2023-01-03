@@ -99,12 +99,11 @@ public class ArticlesServlet extends HttpServlet {
         Connection connection = (Connection) context.getAttribute("dbConnection");
         // BEGIN
         Map<String, String> article = new HashMap<>();
-        String query = "SELECT id, title, body FROM articles WHERE id=?;";
+        String query = "SELECT id, title, body FROM articles WHERE id = ?;";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
 
             int id = Integer.parseInt(getId(request));
-            System.out.println(id);
             statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
