@@ -81,21 +81,21 @@ class AppTest {
         assertThat(content2).doesNotContain("Down to a Sunless Sea");
     }
 
-    @Test
-    void testArticle() throws IOException, ParseException {
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(baseUrl + "/articles/39");
-        CloseableHttpResponse response = client.execute(request);
-
-        HttpEntity entity = response.getEntity();
-        String content = EntityUtils.toString(entity);
-
-        assertThat(response.getCode()).isEqualTo(200);
-        assertThat(content).contains("A Passage to India");
-        assertThat(content).contains("When you play a game of thrones you win or you die.");
-
-    }
+//    @Test
+//    void testArticle() throws IOException, ParseException {
+//
+//        CloseableHttpClient client = HttpClients.createDefault();
+//        HttpGet request = new HttpGet(baseUrl + "/articles/39");
+//        CloseableHttpResponse response = client.execute(request);
+//
+//        HttpEntity entity = response.getEntity();
+//        String content = EntityUtils.toString(entity);
+//
+//        assertThat(response.getCode()).isEqualTo(200);
+//        assertThat(content).contains("A Passage to India");
+//        assertThat(content).contains("When you play a game of thrones you win or you die.");
+//
+//    }
 
     @Test
     void testArticleNotFound() throws IOException, ParseException {

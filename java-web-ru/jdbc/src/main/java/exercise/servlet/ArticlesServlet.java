@@ -98,13 +98,13 @@ public class ArticlesServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Connection connection = (Connection) context.getAttribute("dbConnection");
         // BEGIN
+        String id = getId(request);
         Map<String, String> article = new HashMap<>();
         String query = "SELECT id, title, body FROM articles WHERE id = ?;";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-
-            int id = Integer.parseInt(getId(request));
-            statement.setInt(1, id);
+            int intId = Integer.parseInt(id);
+            statement.setInt(1, intId);
 
             ResultSet rs = statement.executeQuery();
 
@@ -113,7 +113,7 @@ public class ArticlesServlet extends HttpServlet {
             article.put("body", rs.getString("body"));
 
         } catch (SQLException e) {
-            System.out.println("I`m here");
+            System.out.println("An exception has occured: " + e.getMessage());
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
