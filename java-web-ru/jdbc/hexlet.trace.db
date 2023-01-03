@@ -1,0 +1,22 @@
+2023-01-03 15:41:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
+2023-01-03 15:41:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
+2023-01-03 15:43:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
+2023-01-03 15:49:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT ID, TITLE, BODY FROM ARTICLES LIMIT 10 OFFSET ? ORDER[*] BY ID ASC;"
+Syntax error in SQL statement "SELECT ID, TITLE, BODY FROM ARTICLES LIMIT 10 OFFSET ? ORDER[*] BY ID ASC;"; SQL statement:
+SELECT id, title, body FROM articles LIMIT 10 OFFSET ? ORDER BY id ASC; [42000-200]
+2023-01-03 16:12:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
+2023-01-03 16:15:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
+2023-01-03 16:25:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
+No data is available [2000-200]
