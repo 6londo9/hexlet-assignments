@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layouts/application.html}">
+
+<head>
+  <title>Show article</title>
+</head>
+<section layout:fragment="content">
+  <h1>Данные статьи</h1>
+  <div class="card" th:object="${article}">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" th:text="*{title}"></li>
+      <li class="list-group-item" th:text="*{body}"></li>
+      <!-- BEGIN -->
+      <table class="table">
+        <thead>
+          <th>Категория</th>
+        </thead>
+        <tbody>
+          <td th:text="${article.getCategory().getName()}"></td>
+        </tbody>
+      </table>
+      <!-- END -->
+    </ul>
+  </div>
+</section>
