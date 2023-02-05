@@ -26,6 +26,7 @@ spring:
 
 # BEGIN
 # swagger-ui custom path
-springdoc.swagger-ui:
-  path: /swagger.html
+springdoc:
+  swagger-ui:
+    path: /swagger.html
 # END
