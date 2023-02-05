@@ -92,7 +92,7 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "User with given id not found")
     })
     @PatchMapping(path = "/{id}")
-    public void updateUser(
+    public User updateUser(
             @Parameter(description = "Id of user to be updated")
             @PathVariable long id,
             @Parameter(description = "User data to be updated")
@@ -102,7 +102,7 @@ public class UsersController {
             throw new UserNotFoundException(id);
         }
         user.setId(id);
-        this.userRepository.save(user);
+        return this.userRepository.save(user);
     }
     // END
 }
