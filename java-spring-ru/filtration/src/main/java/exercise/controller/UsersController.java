@@ -3,6 +3,8 @@ package exercise.controller;
 import exercise.model.User;
 import exercise.model.QUser;
 import exercise.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,9 @@ public class UsersController {
 //        }
 //    }
 
+    @Operation(summary = "Get list of all users with or w/o filters by:" +
+            "firstName, lastName, Email, Profession, Gender")
+    @ApiResponse(responseCode = "200", description = "List of all users that match filter params")
     @GetMapping("")
     public Iterable<User> getUser(@QuerydslPredicate(root = User.class) Predicate predicate) {
         if (predicate == null) {
