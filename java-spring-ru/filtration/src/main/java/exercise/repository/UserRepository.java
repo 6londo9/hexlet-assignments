@@ -27,10 +27,10 @@ public interface UserRepository extends
         // Дополнительная задача
 
         // BEGIN
-        bindings.bind(user.firstName).first(StringExpression::containsIgnoreCase);
-        bindings.bind(user.lastName).first((StringExpression::containsIgnoreCase));
-        bindings.bind(user.email).first((StringExpression::containsIgnoreCase));
-        bindings.bind(user.profession).first((StringExpression::containsIgnoreCase));
+        bindings.bind(user.firstName,
+                user.lastName,
+                user.email,
+                user.profession).first(StringExpression::containsIgnoreCase);
         bindings.bind(user.gender).first((SimpleExpression::eq));
         // END
     }
