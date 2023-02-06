@@ -1,6 +1,9 @@
 package exercise;
 
+import liquibase.pro.packaged.E;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -115,7 +118,68 @@ public class AppTest {
 
     // Тест для дополнительной задачи
     // BEGIN
+    @Test
+    void testFilterByEmail() throws Exception {
+        MockHttpServletResponse response = mockMvc
+                .perform(get("/users?email=oracle"))
+                .andReturn()
+                .getResponse();
 
-    
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
+
+        List<User> actualUsers = objectMapper.readValue(
+                response.getContentAsString(),
+                new TypeReference<List<User>>() { }
+        );
+
+        User actualUser = actualUsers.get(0);
+        assertThat(actualUsers.size()).isEqualTo(1);
+        assertThat(actualUser.getEmail()).isEqualTo("ceck1@oracle.com");
+    }
+
+    @Test
+    void testFilterByProfession() throws Exception {
+        MockHttpServletResponse response = mockMvc
+                .perform(get("/users?profession=Electrical"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
+
+        List<User> actualUsers = objectMapper.readValue(
+                response.getContentAsString(),
+                new TypeReference<List<User>>() { }
+        );
+        User actualUser = actualUsers.get(0);
+
+        assertThat(actualUsers.size()).isEqualTo(1);
+        assertThat(actualUser.getProfession()).isEqualTo("Electrical Engineer");
+    }
+
+    @Test
+    void testFilterAllParams() throws Exception {
+        MockHttpServletResponse response = mockMvc
+                .perform(get("/users?firstName=anne&lastName=dr&email=census&profession=analog&gender=Male"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
+
+        List<User> actualUsers = objectMapper.readValue(
+                response.getContentAsString(),
+                new TypeReference<List<User>>() { }
+        );
+        User actualUser = actualUsers.get(0);
+
+        assertThat(actualUsers.size()).isEqualTo(1);
+        assertThat(actualUser.getFirstName()).isEqualTo("Annecorinne");
+        assertThat(actualUser.getLastName()).isEqualTo("Dracey");
+        assertThat(actualUser.getEmail()).isEqualTo("adracey5@census.gov");
+        assertThat(actualUser.getProfession()).isEqualTo("Analog Circuit Design manager");
+        assertThat(actualUser.getGender()).isEqualTo("Male");
+    }
     // END
 }
