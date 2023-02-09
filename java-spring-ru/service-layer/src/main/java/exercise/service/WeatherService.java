@@ -1,10 +1,14 @@
 package exercise.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import exercise.CityNotFoundException;
 import exercise.HttpClient;
 import org.springframework.stereotype.Service;
 import exercise.repository.CityRepository;
 import exercise.model.City;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Map;
 
 
 @Service
@@ -23,14 +27,27 @@ public class WeatherService {
     }
 
     // BEGIN
-//    public String getWeatherByCity(String name) {
-//        City city = cityRepository.findAllByNameContainingIgnoreCase(name)
-//                .stream()
-//                .findFirst()
-//                .get();
-//        String cityName = city.getName();
-//
-//        return client.get("http://weather/api/v2/cities/" + cityName);
-//    }
+    public Map<String, String> lookUp(long id) {
+
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> new CityNotFoundException("City not found"));
+
+        String cityName = city.getName();
+        String url = "http://weather/api/v2/cities/" + cityName;
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String responce = client.get(url);
+
+        Map<String, String> result;
+
+        try {
+            result = mapper.readValue(responce, Map.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
     // END
 }

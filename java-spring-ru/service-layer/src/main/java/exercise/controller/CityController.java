@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @RestController
 public class CityController {
@@ -17,25 +21,41 @@ public class CityController {
     @Autowired
     private CityRepository cityRepository;
 
-//    @Autowired
-//    private WeatherService weatherService;
-//
-//    // BEGIN
-//    @GetMapping("/cities/{id}")
-//    public String getCityWeather(@PathVariable("id") long id) {
-//        City city = cityRepository.findById(id)
-//                .orElseThrow(() -> new CityNotFoundException("City not found"));
-//        String cityName = city.getName();
-//        return weatherService.getWeatherByCity(cityName);
-//    }
-//
-//    @GetMapping("/search")
-//    public Iterable<City> getCities(@RequestParam String name) {
-//        if (name == null) {
-//            return cityRepository.findAllOrderByName();
-//        }
-//        return cityRepository.findAll();
-//    }
+    @Autowired
+    private WeatherService weatherService;
+
+    // BEGIN
+    @GetMapping(path = "/search")
+    public List<Map<String, String>> getCities(@RequestParam(required = false) String name) {
+
+        List<City> filteredCities;
+
+        if (name == null) {
+            filteredCities = cityRepository.findAllByOrderByName();
+        } else {
+            filteredCities = cityRepository.findByNameStartingWithIgnoreCase(name);
+        }
+
+        List<Map<String, String>> citiesWithWeather = filteredCities.stream()
+                .map(city -> {
+                    Map<String, String> weather = weatherService.lookUp(city.getId());
+                    return Map.of(
+                            "name", city.getName(),
+                            "temperature", weather.get("temperature")
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return citiesWithWeather;
+    }
+
+    @GetMapping(path = "cities/{id}")
+    public Map<String, String> getCity(@PathVariable long id) {
+
+        Map<String, String> weather = weatherService.lookUp(id);
+
+        return weather;
+    }
     // END
 }
 

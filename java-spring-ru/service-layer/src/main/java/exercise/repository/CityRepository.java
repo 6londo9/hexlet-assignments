@@ -10,8 +10,7 @@ import java.util.List;
 public interface CityRepository extends CrudRepository<City, Long> {
 
     // BEGIN
-//    List<City> findAllByNameContainingIgnoreCase(String name);
-//
-//    Iterable<City> findAllOrderByName();
+    List<City> findByNameStartingWithIgnoreCase(String prefix);
+    List<City> findAllByOrderByName();
     // END
 }
