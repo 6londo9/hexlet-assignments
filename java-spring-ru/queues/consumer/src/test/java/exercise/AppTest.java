@@ -22,44 +22,44 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AppTest {
-//
-//    private static AMQPServerMock server;
-//    private static int mockServerPort = 5612;
-//    private String queue = "queue";
-//    private ObjectMapper mapper = new ObjectMapper();
-//
-//    @BeforeAll
-//    public static void beforeAll() {
-//        server = new AMQPServerMock(defaultConfig().withPort(mockServerPort));
-//        server.start();
-//    }
-//
-//    @AfterAll
-//    public static void afterAll() {
-//        server.stop();
-//    }
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//
-//    @Test
-//    void testGetMessages() throws Exception {
-//
-//        String message = "Test message";
-//
-//        server.publish(new Message("", queue, new AMQP.BasicProperties.Builder().build(), message.getBytes()));
-//        server.publish(new Message("", queue, new AMQP.BasicProperties.Builder().build(), message.getBytes()));
-//
-//        MockHttpServletResponse response = mockMvc
-//            .perform(get("/messages"))
-//            .andReturn()
-//            .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(200);
-//
-//        List<String> messages = mapper.readValue(response.getContentAsString(), new TypeReference<List<String>>() { });
-//        assertThat(messages.size()).isEqualTo(2);
-//        assertThat(messages.get(0)).isEqualTo(message);
-//    }
+
+    private static AMQPServerMock server;
+    private static int mockServerPort = 5612;
+    private String queue = "queue";
+    private ObjectMapper mapper = new ObjectMapper();
+
+    @BeforeAll
+    public static void beforeAll() {
+        server = new AMQPServerMock(defaultConfig().withPort(mockServerPort));
+        server.start();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        server.stop();
+    }
+
+    @Autowired
+    private MockMvc mockMvc;
+
+
+    @Test
+    void testGetMessages() throws Exception {
+
+        String message = "Test message";
+
+        server.publish(new Message("", queue, new AMQP.BasicProperties.Builder().build(), message.getBytes()));
+        server.publish(new Message("", queue, new AMQP.BasicProperties.Builder().build(), message.getBytes()));
+
+        MockHttpServletResponse response = mockMvc
+            .perform(get("/messages"))
+            .andReturn()
+            .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+
+        List<String> messages = mapper.readValue(response.getContentAsString(), new TypeReference<List<String>>() { });
+        assertThat(messages.size()).isEqualTo(2);
+        assertThat(messages.get(0)).isEqualTo(message);
+    }
 }
