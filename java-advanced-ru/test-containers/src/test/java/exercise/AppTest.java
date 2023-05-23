@@ -39,7 +39,7 @@ public class AppTest {
             .withDatabaseName("testcontainers")
             .withUsername("sa")
             .withPassword("sa")
-            .withInitScript("src/test/resources/init.sql");
+            .withInitScript("init.sql");
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
@@ -100,7 +100,7 @@ public class AppTest {
 
     @Test
     void testUpdatePerson() throws Exception {
-        String newPerson = "{\"first_name\":\"Ilya\",\"last_name\":\"Ostapenko\"}";
+        String newPerson = "{\"firstName\":\"Ilya\",\"lastName\":\"Ostapenko\"}";
         MockHttpServletResponse response = mockMvc
                 .perform(
                         patch("/people/1")
@@ -109,7 +109,13 @@ public class AppTest {
                 ).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getContentAsString()).contains("Ostapenko");
+
+
+        MockHttpServletResponse responseGet = mockMvc
+                .perform(
+                        get("/people")
+                ).andReturn().getResponse();
+        assertThat(responseGet.getContentAsString()).contains("Ostapenko");
     }
 
     @Test
