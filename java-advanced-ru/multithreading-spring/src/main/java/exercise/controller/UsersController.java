@@ -2,7 +2,6 @@ package exercise.controller;
 
 import exercise.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +40,7 @@ public class UsersController {
         return userService.createUser(user);
     }
 
-    @PutMapping(path = "/{id}")
+    @PatchMapping(path = "/{id}")
     public Mono<User> updateUser(@RequestBody User user, @PathVariable Long id) {
         return userService.updateUser(user, id);
     }
